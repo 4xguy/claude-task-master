@@ -65,12 +65,17 @@ class TaskMasterMCPServer {
 			await this.init();
 		}
 
-		// Start the FastMCP server with increased timeout
+		// Start the FastMCP server with increased timeout and SSE transport
 		await this.server.start({
-			transportType: 'stdio',
+			transportType: 'sse',
+			sse: {
+				port: 3131,
+				endpoint: '/sse'
+			},
 			timeout: 120000 // 2 minutes timeout (in milliseconds)
 		});
 
+		logger.info('Task Master MCP Server started on http://localhost:3131/sse');
 		return this;
 	}
 
